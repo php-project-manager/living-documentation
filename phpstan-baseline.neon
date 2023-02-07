@@ -1,0 +1,12 @@
+parameters:
+	ignoreErrors:
+
+		-
+			message: "#^Parameter \\#1 \\$messages \\(iterable\\<string\\>\\|string\\) of method PhpProject\\\\LivingDocumentation\\\\Tests\\\\Helper\\\\Cli\\\\InMemoryOutput\\:\\:write\\(\\) should be contravariant with parameter \\$messages \\(iterable\\|string\\) of method Symfony\\\\Component\\\\Console\\\\Output\\\\OutputInterface\\:\\:write\\(\\)$#"
+			count: 2
+			path: tests/helper/Cli/InMemoryOutput.php
+
+		-
+			message: "#^Parameter \\#1 \\$messages \\(iterable\\<string\\>\\|string\\) of method PhpProject\\\\LivingDocumentation\\\\Tests\\\\Helper\\\\Cli\\\\InMemoryOutput\\:\\:writeln\\(\\) should be contravariant with parameter \\$messages \\(iterable\\|string\\) of method Symfony\\\\Component\\\\Console\\\\Output\\\\OutputInterface\\:\\:writeln\\(\\)$#"
+			count: 2
+			path: tests/helper/Cli/InMemoryOutput.php

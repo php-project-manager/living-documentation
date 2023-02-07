@@ -1,0 +1,11 @@
+{
+    "name": "tests/to-document",
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\ToDocument\\": "tests/"
+        }
+    }
+}
