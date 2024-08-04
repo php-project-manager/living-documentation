@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+
+use PhpProject\LivingDocumentation\Test\Command\TestDocumentationCommand;
+use Symfony\Component\Console\Application;
+
+$autoloadFiles = [
+    $GLOBALS['_composer_autoload_path'] ?? null, // composer var
+    __DIR__ . '/../../../autoload.php', // composer dir
+    __DIR__ . '/../vendor/autoload.php', // local
+];
+foreach ($autoloadFiles as $autoloadFile) {
+    if ($autoloadFile !== null && file_exists($autoloadFile)) {
+        require $autoloadFile;
+        break;
+    }
+}
+
+
+$app = new Application('Living Documentation', '0.1.0');
+$app->add(new TestDocumentationCommand());
+$app->setDefaultCommand(TestDocumentationCommand::NAME);
+$app->run();

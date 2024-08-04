@@ -3,6 +3,9 @@
     "description": "Living Documentation",
     "type": "library",
     "license": "MIT",
+    "bin": [
+        "bin/documentor"
+    ],
     "require": {
         "php": "^8.2",
         "beberlei/assert": "^3.3.2",

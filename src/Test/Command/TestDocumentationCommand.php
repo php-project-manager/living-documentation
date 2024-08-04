@@ -14,9 +14,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'test:doc')]
+#[AsCommand(name: self::NAME)]
 final class TestDocumentationCommand extends Command
 {
+    public const NAME = 'test:doc';
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $projectPath = PathArgumentHelper::getPath($input);
