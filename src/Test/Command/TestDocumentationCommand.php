@@ -7,8 +7,10 @@ namespace PhpProject\LivingDocumentation\Test\Command;
 use PhpProject\LivingDocumentation\Test\Builder\TestSuiteDocumentorBuilder;
 use PhpProject\LivingDocumentation\Test\Command\Display\DocumentedTestSuiteConsoleDisplay;
 use PhpProject\LivingDocumentation\Test\Command\ParametersHelper\PathArgumentHelper;
+use PhpProject\LivingDocumentation\Test\Command\ParametersHelper\SuiteArgumentHelper;
 use PhpProject\SourceCode\Files\Manager\FileManager;
 use PhpProject\TestSuite\Builder\TestSuiteConfigurationResolverBuilder;
+use PhpProject\TestSuite\Configuration\TestSuitesConfig;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,7 +29,21 @@ final class TestDocumentationCommand extends Command
         $projectFileManager        = FileManager::build($projectPath);
         $testConfigurationResolver = TestSuiteConfigurationResolverBuilder::for($projectFileManager)->usingPhpUnit()->build();
         $testDocumentor            = TestSuiteDocumentorBuilder::for($projectFileManager)->usingComposer()->build();
-        $documentedTestSuites      = $testDocumentor->documentTestSuites($testConfigurationResolver->getTestSuites());
+
+        $suites = $testConfigurationResolver->getTestSuites();
+
+        $testSuites = SuiteArgumentHelper::getSuites($input);
+        if ($testSuites !== []) {
+            $config = [];
+            foreach ($suites as $suite) {
+                if (\in_array($suite->name, $testSuites, true)) {
+                    $config[] = $suite;
+                }
+            }
+            $suites = new TestSuitesConfig($config);
+        }
+
+        $documentedTestSuites = $testDocumentor->documentTestSuites($suites);
 
         DocumentedTestSuiteConsoleDisplay::displayDocumentedTestSuites($documentedTestSuites, $output);
 
@@ -37,8 +53,8 @@ final class TestDocumentationCommand extends Command
     protected function configure(): void
     {
         $this->getDefinition()
-            ->addArgument(
-                ...PathArgumentHelper::argumentsDefinition()
-            );
+            ->addArgument(...PathArgumentHelper::argumentsDefinition());
+        $this->getDefinition()
+            ->addOption(...SuiteArgumentHelper::optionsDefinition());
     }
 }
