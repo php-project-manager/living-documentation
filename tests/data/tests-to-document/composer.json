@@ -1,7 +1,8 @@
 {
     "name": "tests/to-document",
     "require-dev": {
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "nikic/php-parser": "^4.19"
     },
     "autoload-dev": {
         "psr-4": {
